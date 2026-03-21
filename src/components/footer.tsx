@@ -11,7 +11,7 @@ export default function Footer() {
             {navigation.map((item, index) => (
               <a
                 key={index}
-                href={`http://${item.name}.com/${item.username}`}
+                href={item.url || `http://${item.name.toLowerCase()}.com/${item.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 title={item.name}
