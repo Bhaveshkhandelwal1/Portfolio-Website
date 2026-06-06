@@ -6,8 +6,7 @@ import { CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/
 import { Badge } from "@/components/ui/badge";
 import { BorderMagicButton } from "@/components/ui/border-magic-button";
 import TiltCard from "@/components/TiltCard";
-import { Github } from "lucide-react";
-
+import { Github, ExternalLink } from "lucide-react";
 
 const stagger: Variants = {
   hidden: { opacity: 0 },
@@ -22,6 +21,8 @@ const fadeUp: Variants = {
 const projects = [
   {
     title: "AI-Powered Legal Assistance Platform (Legally)",
+    accent: "from-blue-500 to-cyan-400",
+    emoji: "⚖️",
     description: [
       "Developed a full-stack web application using React, Node.js, Express, MongoDB with secure JWT-based authentication.",
       "Built an AI-powered legal assistant using LangChain, FAISS, InLegalBERT, enabling semantic search and context-aware query processing.",
@@ -31,9 +32,12 @@ const projects = [
     tags: ["React", "Node.js", "LangChain", "FAISS", "InLegalBERT"],
     tagVariants: ["default", "default", "secondary", "secondary", "secondary"] as const,
     github: "https://github.com/Bhaveshkhandelwal1",
+    live: "",
   },
   {
     title: "Placement Management System",
+    accent: "from-purple-500 to-pink-400",
+    emoji: "🏢",
     description: [
       "Designed and implemented a backend-driven recruitment platform using Node.js and MongoDB.",
       "Implemented real-time communication using WebSockets for notifications and updates.",
@@ -44,9 +48,12 @@ const projects = [
     tags: ["Node.js", "MongoDB", "WebSockets", "Kubernetes", "Terraform"],
     tagVariants: ["default", "default", "secondary", "secondary", "secondary"] as const,
     github: "https://github.com/Bhaveshkhandelwal1",
+    live: "",
   },
   {
     title: "AI-Powered Mock Interview Platform",
+    accent: "from-green-500 to-emerald-400",
+    emoji: "🎤",
     description: [
       "Built a full-stack AI interview platform using Next.js, Gemini AI, and PostgreSQL.",
       "Generates custom interview questions, records user responses via webcam and microphone.",
@@ -56,9 +63,12 @@ const projects = [
     tags: ["Next.js", "Gemini AI", "PostgreSQL", "Full-Stack"],
     tagVariants: ["default", "default", "secondary", "secondary"] as const,
     github: "https://github.com/Bhaveshkhandelwal1",
+    live: "",
   },
   {
     title: "Realtime WebSocket Chat Application",
+    accent: "from-amber-500 to-orange-400",
+    emoji: "💬",
     description: [
       "Built a full-duplex real-time chat system using Socket.io and Node.js, enabling instant messaging with multi-client broadcasting and auto-reconnect.",
       "Designed message schema in MongoDB and implemented persistent chat history.",
@@ -67,6 +77,7 @@ const projects = [
     tags: ["Socket.io", "Node.js", "MongoDB", "Real-time"],
     tagVariants: ["default", "default", "secondary", "secondary"] as const,
     github: "https://github.com/Bhaveshkhandelwal1",
+    live: "",
   },
 ];
 
@@ -94,29 +105,48 @@ export default function Projects() {
         {projects.map((project) => (
           <motion.div key={project.title} variants={fadeUp}>
             <TiltCard>
-              <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-4 h-full">
-                <div className="space-y-3">
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
-                  </CardHeader>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, i) => (
-                      <Badge key={tag} variant={project.tagVariants[i] ?? "secondary"}>{tag}</Badge>
-                    ))}
+              <div className="rounded-2xl border border-border bg-card overflow-hidden flex flex-col h-full group">
+                {/* Gradient accent bar */}
+                <div className={`h-1.5 w-full bg-gradient-to-r ${project.accent}`} />
+
+                <div className="p-6 flex flex-col gap-4 flex-grow">
+                  <div className="space-y-3">
+                    <CardHeader className="p-0">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{project.emoji}</span>
+                        <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors duration-200">
+                          {project.title}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, i) => (
+                        <Badge key={tag} variant={project.tagVariants[i] ?? "secondary"}>{tag}</Badge>
+                      ))}
+                    </div>
                   </div>
+
+                  <CardContent className="p-0 flex-grow">
+                    <ul className="text-muted-foreground leading-relaxed space-y-1.5 list-disc list-inside text-sm">
+                      {project.description.map((pt) => <li key={pt}>{pt}</li>)}
+                    </ul>
+                  </CardContent>
+
+                  <CardFooter className="p-0 flex gap-3 flex-wrap">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                      <button className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-border hover:border-primary hover:text-primary transition-all duration-200">
+                        <Github className="h-4 w-4" /> Source Code
+                      </button>
+                    </a>
+                    {project.live && (
+                      <a href={project.live} target="_blank" rel="noopener noreferrer">
+                        <button className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-border hover:border-primary hover:text-primary transition-all duration-200">
+                          <ExternalLink className="h-4 w-4" /> Live Demo
+                        </button>
+                      </a>
+                    )}
+                  </CardFooter>
                 </div>
-                <CardContent className="p-0 flex-grow">
-                  <ul className="text-muted-foreground leading-relaxed space-y-1.5 list-disc list-inside text-sm">
-                    {project.description.map((pt) => <li key={pt}>{pt}</li>)}
-                  </ul>
-                </CardContent>
-                <CardFooter className="p-0 flex gap-3 flex-wrap">
-                  <a href={project.github} target="_blank" rel="noopener noreferrer">
-                    <button className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg border border-border hover:border-primary hover:text-primary transition-all duration-200">
-                      <Github className="h-4 w-4" /> Source Code
-                    </button>
-                  </a>
-                </CardFooter>
               </div>
             </TiltCard>
           </motion.div>

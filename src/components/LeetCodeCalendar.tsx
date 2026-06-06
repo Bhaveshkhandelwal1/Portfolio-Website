@@ -22,22 +22,26 @@ function getLevel(count: number) {
 }
 
 function buildGrid(dayMap: DayMap) {
-    const today = new Date();
     const grid: { date: Date; count: number }[][] = [];
 
-    // Start from 52 weeks ago (Sunday-aligned)
-    const start = new Date(today);
-    start.setDate(start.getDate() - COLS * 7 + 1);
-    // Align to Sunday
-    start.setDate(start.getDate() - start.getDay());
+    // Compute today in UTC
+    const nowUtc = new Date();
+    const todayUtc = Date.UTC(nowUtc.getUTCFullYear(), nowUtc.getUTCMonth(), nowUtc.getUTCDate());
+
+    // Start from 52 weeks ago (Sunday-aligned), in UTC
+    let startUtc = todayUtc - (COLS * 7 - 1) * 86400 * 1000;
+    // Align to Sunday (day 0)
+    const startDay = new Date(startUtc).getUTCDay();
+    startUtc -= startDay * 86400 * 1000;
 
     for (let col = 0; col < COLS; col++) {
         const week: { date: Date; count: number }[] = [];
         for (let row = 0; row < 7; row++) {
-            const d = new Date(start);
-            d.setDate(start.getDate() + col * 7 + row);
-            const ts = String(Math.floor(d.getTime() / 1000));
-            week.push({ date: d, count: dayMap[ts] ?? 0 });
+            const dayUtcMs = startUtc + (col * 7 + row) * 86400 * 1000;
+            const date = new Date(dayUtcMs);
+            // LeetCode stores UTC midnight as unix seconds
+            const ts = String(dayUtcMs / 1000);
+            week.push({ date, count: dayMap[ts] ?? 0 });
         }
         grid.push(week);
     }
@@ -127,7 +131,7 @@ export default function LeetCodeCalendar() {
                             <div key={ci} className="flex flex-col gap-0.5">
                                 {week.map(({ date, count }, ri) => {
                                     const level = getLevel(count);
-                                    const isFuture = date > new Date();
+                                    const isFuture = date.getTime() > Date.now();
                                     return (
                                         <motion.div
                                             key={ri}

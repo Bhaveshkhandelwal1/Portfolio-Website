@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const username = "bhaveshkhandelwal_";
+  const username = "bhaveshkhandelwal_";
 
-    const query = `
+  const query = `
     query userProfileCalendar($username: String!, $year: Int) {
       matchedUser(username: $username) {
         userCalendar(year: $year) {
@@ -19,25 +19,40 @@ export async function GET() {
     }
   `;
 
-    try {
-        const res = await fetch("https://leetcode.com/graphql", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Referer: "https://leetcode.com",
-            },
-            body: JSON.stringify({
-                query,
-                variables: { username, year: new Date().getFullYear() },
-            }),
-            next: { revalidate: 3600 }, // cache for 1h
-        });
+  async function fetchYear(year: number) {
+    const res = await fetch("https://leetcode.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Referer: "https://leetcode.com",
+      },
+      body: JSON.stringify({ query, variables: { username, year } }),
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) throw new Error("LeetCode API error");
+    return res.json();
+  }
 
-        if (!res.ok) throw new Error("LeetCode API error");
+  try {
+    const currentYear = new Date().getFullYear();
+    const [currJson, prevJson] = await Promise.all([
+      fetchYear(currentYear),
+      fetchYear(currentYear - 1),
+    ]);
 
-        const json = await res.json();
-        return NextResponse.json(json.data?.matchedUser ?? null);
-    } catch {
-        return NextResponse.json(null, { status: 502 });
-    }
+    const matchedUser = currJson.data?.matchedUser;
+    if (!matchedUser) return NextResponse.json(null, { status: 502 });
+
+    // Merge calendars from both years
+    const currCal = JSON.parse(matchedUser.userCalendar?.submissionCalendar ?? "{}");
+    const prevCal = JSON.parse(prevJson.data?.matchedUser?.userCalendar?.submissionCalendar ?? "{}");
+    const mergedCalendar = JSON.stringify({ ...prevCal, ...currCal });
+
+    return NextResponse.json({
+      ...matchedUser,
+      userCalendar: { submissionCalendar: mergedCalendar },
+    });
+  } catch {
+    return NextResponse.json(null, { status: 502 });
+  }
 }

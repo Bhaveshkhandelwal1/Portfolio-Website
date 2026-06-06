@@ -29,8 +29,11 @@ export default function Intro() {
     const typed = new Typed(typedRef.current, {
       strings: [
         "Full Stack Developer",
+        "I build scalable apps",
         "Java Expert",
+        "I solve DSA problems",
         "AI Enthusiast",
+        "I love AI &amp; ML",
         "Cloud &amp; DevOps Engineer",
         "Problem Solver",
       ],
@@ -123,7 +126,7 @@ export default function Intro() {
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 pt-2">
               <a href="/contact">
                 <button className="px-6 py-3 rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:opacity-90 hover:shadow-[0_0_22px_rgba(59,130,246,0.5)] transition-all duration-200">
-                  Hire Me
+                  Contact Me
                 </button>
               </a>
               <a
@@ -142,7 +145,7 @@ export default function Intro() {
               <SocialLink href="https://github.com/Bhaveshkhandelwal1" label="GitHub">
                 <GithubIcon />
               </SocialLink>
-              <SocialLink href="https://linkedin.com/in/bhaveshkhandelwal" label="LinkedIn">
+              <SocialLink href="https://www.linkedin.com/in/bhavesh-khandelwal-b9b27b27b/" label="LinkedIn">
                 <LinkedinIcon />
               </SocialLink>
               <SocialLink href="https://leetcode.com/bhaveshkhandelwal_/" label="LeetCode">

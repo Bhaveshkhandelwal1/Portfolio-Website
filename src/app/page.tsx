@@ -3,12 +3,14 @@
 import Intro from "@/components/intro";
 import InfiniteLogoSlider from "@/components/InfiniteLogoSlider";
 import LeetCodeCalendar from "@/components/LeetCodeCalendar";
-import { motion, Variants } from "framer-motion";
+import StatsCounter from "@/components/StatsCounter";
+import { motion, Variants, useInView } from "framer-motion";
+import { useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   GraduationCap, Code2, Award, Sparkles, BookOpen,
-  Database, Layout, Briefcase, Trophy, MapPin,
+  Database, Layout, Briefcase, Trophy, MapPin, Mail, ArrowRight,
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -32,6 +34,70 @@ function SectionHeading({ icon: Icon, title }: { icon: React.ElementType; title:
   );
 }
 
+/* ── Animated skill bar row ── */
+function SkillBar({ emoji, name, pct, delay }: { emoji: string; name: string; pct: number; delay: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
+  return (
+    <div ref={ref} className="flex items-center gap-3">
+      <span className="text-xl w-7 shrink-0">{emoji}</span>
+      <span className="w-32 shrink-0 text-sm font-semibold">{name}</span>
+      <div className="flex-1 h-2.5 rounded-full bg-primary/10 overflow-hidden">
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-r from-primary to-sky-400"
+          initial={{ width: 0 }}
+          animate={inView ? { width: `${pct}%` } : { width: 0 }}
+          transition={{ duration: 1.1, ease: "easeOut", delay }}
+        />
+      </div>
+    </div>
+  );
+}
+
+const skillGroups = [
+  {
+    icon: Code2, title: "Languages",
+    skills: [
+      { emoji: "☕", name: "Java", pct: 90 },
+      { emoji: "🐍", name: "Python", pct: 82 },
+      { emoji: "⚡", name: "JavaScript", pct: 85 },
+      { emoji: "🔷", name: "TypeScript", pct: 78 },
+      { emoji: "🔵", name: "C", pct: 72 },
+    ],
+  },
+  {
+    icon: Layout, title: "Frontend & Frameworks",
+    skills: [
+      { emoji: "⚛️", name: "React", pct: 88 },
+      { emoji: "▲", name: "Next.js", pct: 82 },
+      { emoji: "🎨", name: "Tailwind", pct: 85 },
+      { emoji: "🚀", name: "Node.js", pct: 80 },
+      { emoji: "🟢", name: "Express", pct: 78 },
+    ],
+  },
+  {
+    icon: Database, title: "Cloud & DevOps",
+    skills: [
+      { emoji: "🐳", name: "Docker", pct: 80 },
+      { emoji: "☸️", name: "Kubernetes", pct: 72 },
+      { emoji: "🏗️", name: "Terraform", pct: 68 },
+      { emoji: "☁️", name: "AWS / GCP", pct: 74 },
+      { emoji: "🔄", name: "CI/CD", pct: 76 },
+    ],
+  },
+  {
+    icon: Sparkles, title: "AI / ML",
+    skills: [
+      { emoji: "🔥", name: "PyTorch", pct: 78 },
+      { emoji: "🦜", name: "LangChain", pct: 75 },
+      { emoji: "📐", name: "FAISS", pct: 70 },
+      { emoji: "👁️", name: "OpenCV", pct: 72 },
+      { emoji: "🤖", name: "Scikit-learn", pct: 74 },
+    ],
+  },
+];
+
 export default function Home() {
   return (
     <div className="space-y-24 pb-16">
@@ -50,6 +116,9 @@ export default function Home() {
         <InfiniteLogoSlider />
       </motion.section>
 
+      {/* ── Stats Counter ── */}
+      <StatsCounter />
+
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -63,7 +132,7 @@ export default function Home() {
           <Card className="border-l-4 border-l-primary hover:shadow-[0_4px_24px_rgba(59,130,246,0.2)] transition-all duration-300">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start flex-col sm:flex-row sm:items-center gap-2">
-                <CardTitle className="text-xl">Samsung R&D</CardTitle>
+                <CardTitle className="text-xl">Samsung R&amp;D</CardTitle>
                 <div className="flex gap-2">
                   <Badge variant="outline" className="bg-primary/5 border-primary/30">Bangalore</Badge>
                   <Badge variant="secondary">Nov 2025 – Present</Badge>
@@ -129,60 +198,45 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* Skills — Bento Grid */}
-        <motion.section variants={fadeUp}>
+        {/* Skills — Proficiency Bars */}
+        <motion.section variants={fadeUp} id="skills">
           <SectionHeading icon={Code2} title="Skills" />
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: BookOpen, title: "Core CS", span: "",
-                skills: ["Data Structures & Algorithms", "Operating Systems", "DBMS", "Computer Networks", "OOP"],
-                variant: "outline" as const,
-              },
-              {
-                icon: Code2, title: "Languages", span: "",
-                skills: ["Java", "Python", "C", "JavaScript", "TypeScript"],
-                variant: "default" as const,
-              },
-              {
-                icon: Database, title: "Backend & Databases", span: "",
-                skills: ["Node.js", "Express", "MongoDB", "SQL", "Redis"],
-                variant: "secondary" as const,
-              },
-              {
-                icon: Layout, title: "DevOps & Cloud", span: "",
-                skills: ["Docker", "Kubernetes", "Terraform", "CI/CD", "AWS", "GCP"],
-                variant: "secondary" as const,
-              },
-              {
-                icon: Briefcase, title: "AI / ML", span: "",
-                skills: ["PyTorch", "LangChain", "FAISS", "OpenCV", "Scikit-learn"],
-                variant: "outline" as const,
-              },
-              {
-                icon: Layout, title: "Tools", span: "sm:col-span-2 lg:col-span-1",
-                skills: ["Git", "GitHub", "Linux", "VS Code", "IntelliJ", "Postman"],
-                variant: "outline" as const,
-              },
-            ].map(({ icon: Icon, title, span, skills, variant }) => (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
+            {skillGroups.map(({ icon: Icon, title, skills }) => (
               <Card
                 key={title}
-                className={`group hover:border-primary/50 hover:shadow-[0_4px_20px_rgba(59,130,246,0.15)] transition-all duration-300 ${span}`}
+                className="group hover:border-primary/50 hover:shadow-[0_4px_20px_rgba(59,130,246,0.15)] transition-all duration-300"
               >
-                <CardHeader className="pb-2 flex flex-row items-center gap-2 space-y-0">
+                <CardHeader className="pb-3 flex flex-row items-center gap-2 space-y-0">
                   <div className="p-2 bg-primary/10 rounded-md ring-1 ring-primary/20 group-hover:bg-primary/20 transition-colors">
                     <Icon className="h-4 w-4 text-primary" />
                   </div>
                   <CardTitle className="text-base">{title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {skills.map((s) => <Badge key={s} variant={variant}>{s}</Badge>)}
-                  </div>
+                <CardContent className="space-y-3">
+                  {skills.map((s, i) => (
+                    <SkillBar key={s.name} emoji={s.emoji} name={s.name} pct={s.pct} delay={i * 0.08} />
+                  ))}
                 </CardContent>
               </Card>
             ))}
           </div>
+          {/* Core CS badges strip */}
+          <Card className="mt-4 hover:border-primary/50 transition-all duration-300">
+            <CardHeader className="pb-2 flex flex-row items-center gap-2 space-y-0">
+              <div className="p-2 bg-primary/10 rounded-md ring-1 ring-primary/20">
+                <BookOpen className="h-4 w-4 text-primary" />
+              </div>
+              <CardTitle className="text-base">Core CS Fundamentals</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {["Data Structures & Algorithms", "Operating Systems", "DBMS", "Computer Networks", "OOP", "System Design"].map((s) => (
+                  <Badge key={s} variant="outline" className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-default">{s}</Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </motion.section>
 
         {/* Achievements */}
@@ -219,6 +273,42 @@ export default function Home() {
           </Card>
         </motion.section>
       </motion.div>
+
+      {/* ── CTA Strip ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-transparent to-sky-400/10 p-10 text-center"
+      >
+        {/* Background orbs */}
+        <div aria-hidden className="pointer-events-none absolute -top-16 -left-16 w-64 h-64 rounded-full bg-primary/20 blur-[80px]" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-sky-400/20 blur-[80px]" />
+
+        <div className="relative space-y-4">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary">Open to Work</p>
+          <h2 className="text-4xl font-extrabold tracking-tight">
+            Let&apos;s Build Something{" "}
+            <span className="gradient-text">Amazing</span> Together
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto text-sm leading-relaxed">
+            I&apos;m actively looking for internships and full-time roles in software engineering, AI/ML, and cloud. Let&apos;s connect!
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <a href="/contact">
+              <button className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:opacity-90 hover:shadow-[0_0_28px_rgba(59,130,246,0.55)] transition-all duration-200">
+                Contact Me <ArrowRight className="h-4 w-4" />
+              </button>
+            </a>
+            <a href="mailto:bhaveshkhandelwal1232@gmail.com">
+              <button className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-bold border border-border hover:border-primary hover:text-primary transition-all duration-200">
+                <Mail className="h-4 w-4" /> Send Email
+              </button>
+            </a>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 }
