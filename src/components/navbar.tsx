@@ -110,7 +110,7 @@ export default function Navbar() {
 
                     {/* Resume button */}
                     <a
-                        href="https://drive.google.com/file/d/1EeDIOij_XLIu7Xc2UPCLYIuGwTUYZ8Oj/view?usp=drive_link"
+                        href="https://drive.google.com/file/d/1A6Mo1R16375jYVUtI0an1ELB6ZAZaTM0/view?usp=sharing"
                         target="_blank"
                         rel="noopener noreferrer"
                     >

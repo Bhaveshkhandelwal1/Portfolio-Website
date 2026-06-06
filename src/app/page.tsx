@@ -175,7 +175,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { school: "M.B. International School", year: "2022", level: "Class XII CBSE", location: "Kota", score: "90.6%" },
+                { school: "M.B. International School", year: "2022", level: "Class XII CBSE", location: "Kota", score: "90.8%" },
                 { school: "Decent Public School", year: "2020", level: "Class X CBSE", location: "Kota", score: "87.6%" },
               ].map((edu) => (
                 <Card key={edu.school} className="hover:border-primary/50 hover:shadow-[0_4px_20px_rgba(59,130,246,0.15)] transition-all duration-300">
