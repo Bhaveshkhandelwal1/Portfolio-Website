@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   GraduationCap, Code2, Award, Sparkles, BookOpen,
-  Database, Layout, Briefcase, Trophy, MapPin, Mail, ArrowRight,
+  Database, Layout, Trophy, MapPin, Mail, ArrowRight,
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -125,33 +125,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         className="space-y-24"
-      >
-        {/* Experience */}
-        <motion.section variants={fadeUp}>
-          <SectionHeading icon={Briefcase} title="Experience" />
-          <Card className="border-l-4 border-l-primary hover:shadow-[0_4px_24px_rgba(59,130,246,0.2)] transition-all duration-300">
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-start flex-col sm:flex-row sm:items-center gap-2">
-                <CardTitle className="text-xl">Samsung R&amp;D</CardTitle>
-                <div className="flex gap-2">
-                  <Badge variant="outline" className="bg-primary/5 border-primary/30">Bangalore</Badge>
-                  <Badge variant="secondary">Nov 2025 – Present</Badge>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground font-semibold mb-3">AI-Based Image Classification System</p>
-              <ul className="text-sm text-muted-foreground space-y-2 list-disc list-inside">
-                <li>Developed an image classification system using MobileNetV3 and EfficientNetV2 with transfer learning across 10+ categories.</li>
-                <li>Engineered a modular ML pipeline with YAML-based configuration, improving reproducibility and scalability.</li>
-                <li>Optimized model performance achieving 95%+ accuracy and sub-500ms inference latency using PyTorch and OpenCV.</li>
-                <li>Collaborated in a cross-functional team of 4, following agile development practices.</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </motion.section>
 
-        {/* Education */}
         <motion.section variants={fadeUp}>
           <SectionHeading icon={GraduationCap} title="Education" />
           <div className="grid gap-4 md:gap-6">
