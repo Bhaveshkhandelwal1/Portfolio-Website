@@ -125,7 +125,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         className="space-y-24"
-
+      >
         <motion.section variants={fadeUp}>
           <SectionHeading icon={GraduationCap} title="Education" />
           <div className="grid gap-4 md:gap-6">
