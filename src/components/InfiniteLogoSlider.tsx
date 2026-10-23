@@ -3,18 +3,21 @@
 import React from "react";
 
 const TECH_LOGOS = [
-    { name: "React", icon: "⚛️" },
-    { name: "Next.js", icon: "▲" },
-    { name: "Node.js", icon: "🟩" },
-    { name: "Docker", icon: "🐳" },
-    { name: "Kubernetes", icon: "☸️" },
     { name: "Python", icon: "🐍" },
     { name: "Java", icon: "☕" },
+    { name: "FastAPI", icon: "⚡" },
+    { name: "Node.js", icon: "🟩" },
     { name: "MongoDB", icon: "🍃" },
-    { name: "AWS", icon: "☁️" },
-    { name: "Git", icon: "🔀" },
+    { name: "Redis", icon: "🔴" },
+    { name: "LangChain", icon: "🦜" },
+    { name: "Gemini AI", icon: "✨" },
+    { name: "Docker", icon: "🐳" },
+    { name: "Kubernetes", icon: "☸️" },
+    { name: "Qdrant", icon: "🎯" },
     { name: "TensorFlow", icon: "🧠" },
-    { name: "TypeScript", icon: "🔷" },
+    { name: "React", icon: "⚛️" },
+    { name: "Next.js", icon: "▲" },
+    { name: "Git", icon: "🔀" },
 ];
 
 export default function InfiniteLogoSlider() {

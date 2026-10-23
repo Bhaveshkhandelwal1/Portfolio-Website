@@ -14,8 +14,8 @@ interface Stat {
 const stats: Stat[] = [
     { value: 200, suffix: "+", label: "DSA Problems Solved", emoji: "🧠", color: "from-blue-500/20 to-blue-600/5" },
     { value: 5, suffix: "+", label: "Projects Built", emoji: "🚀", color: "from-purple-500/20 to-purple-600/5" },
-    { value: 1, suffix: "", label: "Internship @ Samsung", emoji: "💼", color: "from-green-500/20 to-green-600/5" },
-    { value: 8.66, suffix: "", label: "CGPA / 10", emoji: "🎓", color: "from-amber-500/20 to-amber-600/5" },
+    { value: 1, suffix: "", label: "Samsung PRISM Intern", emoji: "💼", color: "from-green-500/20 to-green-600/5" },
+    { value: 8.75, suffix: "", label: "CGPA / 10", emoji: "🎓", color: "from-amber-500/20 to-amber-600/5" },
 ];
 
 function CountUp({ target, suffix, inView }: { target: number; suffix: string; inView: boolean }) {

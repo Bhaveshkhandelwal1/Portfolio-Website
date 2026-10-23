@@ -18,7 +18,7 @@ const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } },
 };
 
-const skills = ["React", "Node.js", "AI / ML"];
+const skills = ["Backend Engineering", "AI / ML & RAG", "Cloud & DevOps", "Full Stack"];
 
 export default function Intro() {
   const typedRef = useRef<HTMLSpanElement>(null);
@@ -28,14 +28,13 @@ export default function Intro() {
     if (!typedRef.current) return;
     const typed = new Typed(typedRef.current, {
       strings: [
+        "Backend Engineer",
+        "AI / ML Developer",
+        "Samsung PRISM Intern",
         "Full Stack Developer",
-        "I build scalable apps",
-        "Java Expert",
-        "I solve DSA problems",
-        "AI Enthusiast",
-        "I love AI &amp; ML",
-        "Cloud &amp; DevOps Engineer",
-        "Problem Solver",
+        "Building Scalable Systems",
+        "RAG &amp; LLM Integration",
+        "Problem Solver (DSA)",
       ],
       typeSpeed: 55,
       backSpeed: 35,
@@ -108,6 +107,11 @@ export default function Intro() {
                 Open to Internships &amp; Full-time Roles
               </span>
             </motion.div>
+
+            {/* Brief Bio */}
+            <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-xl text-base">
+              Computer Science undergraduate at Ramaiah Institute of Technology with strong foundations in Data Structures &amp; Algorithms, Operating Systems, DBMS, and Computer Networks. Experienced in Backend Engineering and AI-driven applications using modern frameworks and cloud-native tools.
+            </motion.p>
 
             {/* Contact badges */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-2">

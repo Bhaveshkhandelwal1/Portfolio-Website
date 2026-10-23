@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bhavesh Khandelwal | Software Development Engineer",
-  description: "Aspiring Software Development Engineer and third-year Computer Science Engineering student at MSRIT, passionate about solving complex problems through advanced data structures and algorithms.",
+  title: "Bhavesh Khandelwal | Software Engineer & AI Developer",
+  description: "Computer Science undergraduate at Ramaiah Institute of Technology experienced in Backend Engineering, AI-driven applications, RAG pipelines, and cloud-native tools.",
 };
 
 export default function RootLayout({
